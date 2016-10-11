@@ -48,7 +48,11 @@ namespace Blog\Controller;
     	
       $form = new BlogForm();
 	   if ($this->params('id') > 0) {
-            $post = $this->getEntityManager()->getRepository('Blog\Entity\Blog')->find($this->params('id'));
+	   		$id = $this->params('id');
+		   
+		    $blog =  $this->getEntityManager()->find('Blog\Entity\Blog', $id);
+			$form->bind($blog);
+			return array('form' => $form, 'id' => $id , 'blog' => $blog);
         }
         $request = $this->getRequest();  
         if ($request->isPost()) {
@@ -81,8 +85,6 @@ namespace Blog\Controller;
 					
                 	$adapter->setDestination(dirname(__DIR__).'\Assets');
 					$adapter->addFilter('File\Rename', array('target' => $adapter->getDestination() .DIRECTORY_SEPARATOR . rand(2,1000).'.jpg','overwrite' => true));
-					// $adapter->addFilter('File\Rename',
-						// array('target' => dirname(__DIR__).'/assets/'.$File['name']));
 					$adapter->receive();
 					$filename = explode($adapter->getDestination().DIRECTORY_SEPARATOR,$adapter->getFileName('Image'));
 					$data = array_merge(
@@ -107,38 +109,34 @@ namespace Blog\Controller;
 			    } 
         	}
     	}
-          
-        return array('form' => $form);
+         $id = (int) $this->params()->fromRoute('id', 0); 
+        return array('form' => $form, 'id' => $id);
     }
 
     public function deleteAction()
     {
         $id = (int) $this->params()->fromRoute('id', 0);
-        if (!$id) {
-            return $this->redirect()->toRoute('blog');
-        }
- 
-        $request = $this->getRequest();
-        if ($request->isPost()) {
-            $del = $request->getPost('del', 'No');
- 
-            if ($del == 'Yes') {
-                $id = (int) $request->getPost('id');
-                $blog = $this->getEntityManager()->find('Blog\Entity\Blog', $id);
-                if ($blog) {
-                    $this->getEntityManager()->remove($blog);
-                    $this->getEntityManager()->flush();
-                }
-            }
- 
-            // Redirect to list of 'blogs
-            return $this->redirect()->toRoute('blog');
-        }
- 
-        return array(
-            'id'    => $id,
-            'blog' => $this->getEntityManager()->find('Blog\Entity\Blog', $id)
-        );
+         if (!$id) {
+             return $this->redirect()->toRoute('blog');
+         }
+
+         $request = $this->getRequest();
+         if ($request->isPost()) {
+         	$del = $request->getPost()->toArray();
+             if ($del["del"] == 'Yes') {
+                $feature = $this->getEntityManager()->find('Blog\Entity\Blog', $id);
+		            if ($feature) {
+		                $this->getEntityManager()->remove($feature);
+		                $this->getEntityManager()->flush();
+		            }
+             }
+
+             return $this->redirect()->toRoute('blog');
+         }
+
+		return new ViewModel(array(
+            'blog' => $this->getEntityManager()->find('Blog\Entity\Blog', $id),
+        ));
     }
 	
 }

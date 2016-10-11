@@ -1,11 +1,10 @@
 <?php
 $form = $this->form;
-$form->setAttribute('action', $this->url('blog', array('action' => 'edit', 'id' => $this->id,)));
+$form->setAttribute('action', $this->url('blog', array('action' => 'edit', 'id' => $id)));
 $form->prepare();
 $title = $form->get('Title');
 $text = $form->get('Text');
 $fileElement = $form->get('Image');
-
 ?>
 <div>
     <div>
@@ -16,26 +15,24 @@ $fileElement = $form->get('Image');
             <div>
             	<?php 
             	echo $this->form()->openTag($form);
-				echo $this->formHidden($form->get('id')); 
-            	
             	?>
                 <table>
                     <tbody>
                     <tr>
                        <td><?php echo $this->formLabel($title);?></td>
-						<td><?php echo $this->formInput($title);?></td>
-						<td><?php 	echo $this->formElementErrors($title);?></td>
+						<td><input type="text" name="Title" value="<?php echo $blog->getTitle()?>"></td>
+						<td><?php echo $this->formElementErrors($title);?></td>
                     </tr>
                    
                     <tr>
                        <td><?php echo $this->formLabel($text);?></td>
-						<td><?php echo $this->formTextArea($text);?></td>
-						<td><?php 	echo $this->formElementErrors($text);?></td>
+						<td><textarea  rows="20" cols="40" name="Text" ><?php echo $blog->getText()?></textarea></td>
+						<td><?php echo $this->formElementErrors($text);?></td>
                     </tr>
                     <tr>
                         <td><?php echo $this->formLabel($fileElement);?></td>
 						<td><?php echo $this->formFile($fileElement);?></td>
-						<td><?php 	echo $this->formElementErrors($fileElement);?></td>
+						<td><?php echo $this->formElementErrors($fileElement);?></td>
                     </tr>
                     <tr>
                         <td><?php echo $this->formSubmit($form->get('submit')); ?></td>

@@ -1,10 +1,13 @@
 <?php
+//$this->headLink()->appendStylesheet('/css/opmaak.css');
 $form = $this->form;
 $form->setAttribute('action', $this->url('blog', array('action' => 'add')));
 $form->prepare();
 $title = $form->get('Title');
 $text = $form->get('Text');
 $fileElement = $form->get('Image');
+
+
 
 ?>
 <div>
@@ -23,7 +26,7 @@ $fileElement = $form->get('Image');
                     <tbody>
                     <tr>
                        <td><?php echo $this->formLabel($title);?></td>
-						<td><?php echo $this->formInput($title);?></td>
+						<td><?php echo $this->formInput( $form->get('Title'));?></td>
 						<td><?php 	echo $this->formElementErrors($title);?></td>
                     </tr>
                    
@@ -38,7 +41,7 @@ $fileElement = $form->get('Image');
 						<td><?php 	echo $this->formElementErrors($fileElement);?></td>
                     </tr>
                     <tr>
-                        <td><?php echo $this->formSubmit($form->get('submit')); ?></td>
+                        <td colspan="3"><?php echo $this->formSubmit($form->get('submit')); ?></td>
                     </tr>
                     </tbody>
                 </table>
