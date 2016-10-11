@@ -39,21 +39,7 @@ namespace Blog\Controller;
     
     public function addAction()
     {
-        return $this->editAction();
-    }
-	
- 
-    public function editAction()
-    {
-    	
-      $form = new BlogForm();
-	   if ($this->params('id') > 0) {
-	   		$id = $this->params('id');
-		   
-		    $blog =  $this->getEntityManager()->find('Blog\Entity\Blog', $id);
-			$form->bind($blog);
-			return array('form' => $form, 'id' => $id , 'blog' => $blog);
-        }
+   		$form = new BlogForm();
         $request = $this->getRequest();  
         if ($request->isPost()) {
              
@@ -108,6 +94,29 @@ namespace Blog\Controller;
 			       var_dump($message);
 			    } 
         	}
+    	}
+         $id = (int) $this->params()->fromRoute('id', 0); 
+        return array('form' => $form, 'id' => $id);     	
+        
+    }
+	
+ 
+    public function editAction()
+    {
+    	
+	      $form = new BlogForm();
+		  $request = $this->getRequest();
+		  if (!$request->isPost()) {
+	   		if ($this->params('id') > 0) {
+		   		$id = $this->params('id');
+			   
+			    $blog =  $this->getEntityManager()->find('Blog\Entity\Blog', $id);
+				$form->bind($blog);
+				return array('form' => $form, 'id' => $id , 'blog' => $blog);
+	        }
+	  	}  
+		 else if ($request->isPost()) {
+            return $this->AddAction();
     	}
          $id = (int) $this->params()->fromRoute('id', 0); 
         return array('form' => $form, 'id' => $id);
