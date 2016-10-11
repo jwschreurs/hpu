@@ -11,19 +11,27 @@
                     <tbody>
                     <tr>
                         <td><?php echo $blog->getText(); ?></td>
+                         <td>
+                        	<?php
+                        	if($blog->getImage()){
+                        		?>
+                        		<img src="<?php echo '/Assets/'.$blog->getImage(); ?>" height="150 width="75" alt="<?php echo $blog->getTitle(); ?>">
+                        		<?php
+							}
+							else {
+								?>
+                        		<img src="<?php echo '/Assets/geen_foto_beschikbaar.jpg'?>" height="100" width="100" alt="no image">
+                        		<?php
+							}
+                    		?>
+                    	</td>
                     </tr>
                     <tr>
                     	<td>
                             <a href="<?php echo $this->url('blog', array('action'=>'edit', 'id' => $blog->getId()));?>">Edit</a> |
                             <a href="<?php echo $this->url('blog', array('action'=>'delete', 'id' => $blog->getId()));?>">Delete</a>
                         </td>
-                    </tr>
-                    <tr>
-                    	<td>
-                    		<img src="<?php echo $this->basePath('Assets/geen_foto_beschikbaar.jpg')?>" alt="test">
-                    		
-                    	</td>
-                    	
+                      
                     </tr>
                     </tbody>
                 </table>

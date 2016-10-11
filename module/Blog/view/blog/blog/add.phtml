@@ -19,6 +19,7 @@ $fileElement = $form->get('Image');
             <div>
             	<?php 
             	echo $this->form()->openTag($form);
+				echo $this->formHidden($form->get('id')); 
             	
             	?>
                 <table>

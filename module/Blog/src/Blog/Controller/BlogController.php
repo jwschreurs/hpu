@@ -69,7 +69,7 @@ namespace Blog\Controller;
                     $form->setMessages(array('Image'=>$error ));
                 } else {
 					
-                	$adapter->setDestination(dirname(__DIR__).'\Assets');
+                	$adapter->setDestination('.\public\Assets');
 					$adapter->addFilter('File\Rename', array('target' => $adapter->getDestination() .DIRECTORY_SEPARATOR . rand(2,1000).'.jpg','overwrite' => true));
 					$adapter->receive();
 					$filename = explode($adapter->getDestination().DIRECTORY_SEPARATOR,$adapter->getFileName('Image'));
