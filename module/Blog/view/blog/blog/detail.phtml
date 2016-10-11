@@ -1,0 +1,27 @@
+<div>
+    <div>
+        <div>
+            <div>
+                <h3><?php echo $blog->getTitle(); ?></h3>
+            </div>
+            <div>
+
+                <?php if (isset($blog)) : ?>
+                <table>
+                    <tbody>
+                    <tr>
+                        <td><?php echo $blog->getText(); ?></td>
+                    </tr>
+                    <tr>
+                    	<td>
+                            <a href="<?php echo $this->url('blog', array('action'=>'edit', 'id' => $blog->getId()));?>">Edit</a> |
+                            <a href="<?php echo $this->url('blog', array('action'=>'delete', 'id' => $blog->getId()));?>">Delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>

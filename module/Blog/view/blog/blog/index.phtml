@@ -1,0 +1,39 @@
+<div>
+    <div>
+        <div>
+            <div>
+                <h3>Blog</h3>
+            </div>
+            <div>
+                <a href="<?php echo $this->url('blog', array('action'=>'add'));?>">Add Blog</a>
+
+                <?php if (isset($blogs)) : ?>
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Text</th>
+                        <th></th>
+                    </tr>
+                    </thead>
+                <?php foreach($blogs as $blog): ?>
+                    <tbody>
+                    <tr>
+                        <td><strong><?php echo $blog->getTitle(); ?></strong></td>
+                        <td><?php echo $blog->truncate($blog->getText(),100, array('ending'=>'..', 'exact'=>false)); ?></td>
+                        <td>                            
+                        	<a href="<?php echo $this->url('blog', array('action'=>'detail', 'id' => $blog->getId()));?>">Lees meer</a> |
+                        </td>
+                        <td>
+                            <a href="<?php echo $this->url('blog', array('action'=>'edit', 'id' => $blog->getId()));?>">Edit</a> |
+                            <a href="<?php echo $this->url('blog', array('action'=>'delete', 'id' => $blog->getId()));?>">Delete</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                <?php endforeach; ?>
+                </table>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</div>
